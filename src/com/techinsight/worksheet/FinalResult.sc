@@ -12,6 +12,7 @@ var expressions: Array[String] = text.split("\n")
   }
 expressions = expressions.map(_.trim).map(_.replaceAll(";","")).map(_.replaceAll("\\/\\/.*",""))
 requiredExpressions = expressions.toList.filter(_.startsWith("val")).map(_.replaceFirst("val ",""))
+
 /******************************************************/
 /*
  * Divide expressions on key and values and put it into Map
