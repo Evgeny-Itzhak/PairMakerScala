@@ -17,26 +17,16 @@ class TextHandlerTest extends FunSuite with BeforeAndAfterEach {
 
 
   test("testPrepareExpression should return ArrayList with expressions") {
-    TextHandler.prepareExpression(textToParsePositive)
     assertResult(List("t = xs(i)", "pivot = xs((l + r) / 2)"),"Actual result doesn't matches expected")(TextHandler.prepareExpression(textToParsePositive))
   }
 
-  test("testPrepareExpression should return empty ArrayList in case argument doesn't contain required expressions") {
-    assert((TextHandler.prepareExpression(textNull).isEmpty), "list should be empty when argument doesn't contain required expressions")
-  }
-
   test("testPrepareExpression should return empty ArrayList in case argument doesn't contain required expressions or it's null or empty") {
-    //assert((TextHandler.prepareExpression(textNull).isEmpty), "list should be empty when argument doesn't contain required expressions")
+    assert((TextHandler.prepareExpression(textEmpty).isEmpty), "list should be empty when argument doesn't contain required expressions")
     assert((TextHandler.prepareExpression(textNull).isEmpty), "list should be empty when argument is null")
-    //assert((TextHandler.prepareExpression(textEmpty).isEmpty), "list should be empty argument is empty")
-  }
-
-  test("testPrepareExpression should return empty List() in case argument is empty") {
-    assert((TextHandler.prepareExpression(textEmpty).isEmpty), "list should be empty argument is empty")
+    assert((TextHandler.prepareExpression(textToParseNegative).isEmpty), "list should be empty argument is empty")
   }
 
   test("testMakePair should return Map with (names => expressions)") {
-    TextHandler.makePair(requiredExpressionsWithTextPositive)
     assertResult(Map("t" -> "xs(i)", "pivot" -> "xs((l + r) / 2)"),"Actual result doesn't matches expected")(TextHandler.makePair(requiredExpressionsWithTextPositive))
   }
 

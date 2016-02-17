@@ -14,31 +14,29 @@ case class Text(inputText: String)
 object TextHandler extends OperateText{
 
   override def prepareExpression(text: String): List[String] = {
-    var requiredExpressions: List[String] = List()
 
     text match {
-      case text if text == null => println("\n***\nInput text is Null.\n***\n"); return requiredExpressions
-      case text if text.isEmpty => println("\n***\nInput text is empty.\n***\n"); return requiredExpressions
+      case text if text == null => println("\n***\nInput text is Null.\n***\n"); return List()
+      case text if text.isEmpty => println("\n***\nInput text is empty.\n***\n"); return List()
       case _ =>
     }
 
-    var expressions: Array[String] = text.split("\n")
-    expressions = expressions.map(_.trim).map(_.replaceAll(";","")).map(_.replaceAll("\\/\\/.*",""))
-    requiredExpressions = expressions.toList.filter(_.startsWith("val")).map(_.replaceFirst("val ",""))
-    return requiredExpressions
+    val expressions: Array[String] = text.split("\n").map(_.trim.replaceAll(";","").replaceAll("\\/\\/.*",""))
+      return expressions.toList.filter(_.startsWith("val")).map(_.replaceFirst("val ",""))
   }
 
   override def makePair(requiredExpressions: List[String]): Map[String, String] = {
-    var pairMap =  Map[String, String]()
-    for(i <- requiredExpressions)
+    val pairMap =
+    for(i <- requiredExpressions) yield(
     {
       val currentExpression = i.split("=", 2).map(_.trim)
-      pairMap += (currentExpression(0) -> currentExpression(1))
-    }
+      (currentExpression(0) -> currentExpression(1))
+
+    })
     println("name => expression: \n")
     pairMap match {
-      case pairMapData if pairMapData.isEmpty => print("\n*----*\nThere is no any required expressions!\n*----*\n"); return pairMap;
-      case _ => pairMap.foreach(tuple => println(tuple._1 +" => " + tuple._2)); return pairMap;
+      case pairMapData if pairMapData.isEmpty => print("\n*----*\nThere is no any required expressions!\n*----*\n"); return pairMap.toMap;
+      case _ => pairMap.foreach(tuple => println(tuple._1 +" => " + tuple._2)); return pairMap.toMap;
     }
   }
 

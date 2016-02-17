@@ -14,15 +14,16 @@ expressions = expressions.map(_.trim).map(_.replaceAll(";","")).map(_.replaceAll
 requiredExpressions = expressions.toList.filter(_.startsWith("val")).map(_.replaceFirst("val ",""))
 
 /******************************************************/
+
 /*
  * Divide expressions on key and values and put it into Map
  */
-var pairMap = Map[String, String]()
-for(i<- requiredExpressions)
+val pairMap =
+for(i<- requiredExpressions) yield(
 {
   val currentExpression = i.split("=", 2).map(_.trim)
-  pairMap += (currentExpression(0) -> currentExpression(1))
-}
+  (currentExpression(0) -> currentExpression(1))
+})
 println("pairMap: ")
 pairMap match {
   case pairMapData if pairMapData.isEmpty => print("There is no any required expressions!")
