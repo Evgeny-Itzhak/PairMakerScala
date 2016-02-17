@@ -15,6 +15,9 @@ object AppStart extends App{
   TextHandler.makePair(TextHandler.prepareExpression(textInObject.inputText))
 
   /*run without object creation*/
+  val preparedExpression1 = TextHandler.prepareExpression(textToParse)
+  TextHandler.makePair(preparedExpression1)
+
   TextHandler.makePair(TextHandler.prepareExpression(textToParse))
   TextHandler.makePair(TextHandler.prepareExpression(textToParseNegative))
   TextHandler.makePair(TextHandler.prepareExpression(textNull))
